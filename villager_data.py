@@ -10,15 +10,21 @@ def all_species(filename):
     Return:
         - set[str]: a set of strings
     """
+    unique_species = set()
+    
+    f = open(filename)
+    for line in f:
+        species = line.rstrip().split("|")[1]
+        unique_species.add(species)
+    f.close()
 
-    species = set()
+    print(unique_species)
+    return unique_species
 
-    # TODO: replace this with your code
-
-    return species
+# all_species("villagers.csv")
 
 
-def get_villagers_by_species(filename, search_string="All"):
+def get_villagers_by_species(filename, search_string="every"):
     """Return a list of villagers' names by species.
 
     Arguments:
@@ -30,10 +36,19 @@ def get_villagers_by_species(filename, search_string="All"):
     """
 
     villagers = []
+   
+    f = open(filename)
+    for line in f:
+        name, species = line.rstrip().split("|")[:2]
 
-    # TODO: replace this with your code
-
+        if search_string in ("every", species):
+            villagers.append(name)
+    f.close()
+    
+    print(sorted(villagers))
     return sorted(villagers)
+
+# get_villagers_by_species('villagers.csv', search_string="every")
 
 
 def all_names_by_hobby(filename):
@@ -45,10 +60,44 @@ def all_names_by_hobby(filename):
     Return:
         - list[list[str]]: a list of lists containing names
     """
+    fitness = []
+    nature = []
+    education =[]
+    music = []
+    fashion = []
+    play = []
 
-    # TODO: replace this with your code
+    f = open(filename)
+    for line in f:
 
-    return []
+        name, _, _, hobby, _ = line.rstrip().split("|")
+        # hobby = line.rstrip().split("|")[3]
+        # name = line.rstrip().split("|")[0]
+        if hobby == "Fitness":
+            fitness.append(name)
+        elif hobby == "Nature":
+            nature.append(name)
+        elif hobby == "Education":
+            education.append(name)
+        elif hobby == "Music":
+            music.append(name)
+        elif hobby == "Fashion":
+            fashion.append(name)
+        elif hobby == "Play":
+            play.append(name)
+    f.close()
+
+    '''returing out sorted names by hobby'''
+    return[
+        sorted(fitness),
+        sorted(nature),
+        sorted(education),
+        sorted(music),
+        sorted(fashion),
+        sorted(play),
+    ]
+
+# print(all_names_by_hobby("villagers.csv"))
 
 
 def all_data(filename):
@@ -65,10 +114,20 @@ def all_data(filename):
     """
 
     all_data = []
+    f = open(filename)
+    for line in f:
+        data_tuple = tuple(line.rstrip().split("|"))
+        all_data.append(data_tuple)
 
-    # TODO: replace this with your code
+        '''Another way to write the above code, but nested'''
+        # all_data.append(tuple(line.rstrip().split("|")))
+    f.close()
 
+#     print(all_data)
     return all_data
+
+# print(all_data("villagers.csv"))
+
 
 
 def find_motto(filename, villager_name):
@@ -84,9 +143,14 @@ def find_motto(filename, villager_name):
     Return:
         - str: the villager's motto or None
     """
+    f = open(filename)
+    for name, _, _, _, motto in all_data(filename):
+        if name == villager_name:
+            f.close()
 
-    # TODO: replace this with your code
+            return motto
 
+# print(find_motto("villagers.csv", "name"))
 
 def find_likeminded_villagers(filename, villager_name):
     """Return a set of villagers with the same personality as the given villager.
@@ -102,5 +166,24 @@ def find_likeminded_villagers(filename, villager_name):
         >>> find_likeminded_villagers('villagers.csv', 'Wendy')
         {'Bella', ..., 'Carmen'}
     """
+    
+    same_personality = set()
+    wanted_personality = None
+    for villager_info in all_data(filename):
+        name, _, personality = villager_info[:3]
+        if name == villager_name:
+         wanted_personality = personality
+         break
 
-    # TODO: replace this with your code
+    if wanted_personality:
+        for villager_info in all_data(filename):
+            name, _, personality = villager_info[:3]
+            if personality == wanted_personality:
+                same_personality.add(name)
+
+    return same_personality
+    
+result = find_likeminded_villagers("villagers.csv", "Wendy")
+
+print(sorted(result))
+print(len(result))
