@@ -21,7 +21,7 @@ def all_species(filename):
     print(unique_species)
     return unique_species
 
-# all_species("villagers.csv")
+all_species("villagers.csv")
 
 
 def get_villagers_by_species(filename, search_string="every"):
@@ -48,7 +48,7 @@ def get_villagers_by_species(filename, search_string="every"):
     print(sorted(villagers))
     return sorted(villagers)
 
-# get_villagers_by_species('villagers.csv', search_string="every")
+get_villagers_by_species('villagers.csv', search_string="every")
 
 
 def all_names_by_hobby(filename):
@@ -97,7 +97,7 @@ def all_names_by_hobby(filename):
         sorted(play),
     ]
 
-# print(all_names_by_hobby("villagers.csv"))
+print(all_names_by_hobby("villagers.csv"))
 
 
 def all_data(filename):
@@ -123,10 +123,10 @@ def all_data(filename):
         # all_data.append(tuple(line.rstrip().split("|")))
     f.close()
 
-#     print(all_data)
+    print(all_data)
     return all_data
 
-# print(all_data("villagers.csv"))
+print(all_data("villagers.csv"))
 
 
 
@@ -150,7 +150,7 @@ def find_motto(filename, villager_name):
 
             return motto
 
-# print(find_motto("villagers.csv", "name"))
+print(find_motto("villagers.csv", "name"))
 
 def find_likeminded_villagers(filename, villager_name):
     """Return a set of villagers with the same personality as the given villager.
